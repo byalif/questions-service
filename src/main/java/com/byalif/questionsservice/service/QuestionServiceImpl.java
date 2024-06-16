@@ -70,17 +70,36 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public ResponseEntity<ResponseDTO> newClientSubmission(QuestionDTO questions) {
-		try {
-            // Publish a message to Kafka topic containing necessary information
-			KafkaDTO kafkaDTO = new KafkaDTO();
-			kafkaDTO.setQuestionDTO(questions);
-            kafkaProducer.sendMessage(kafkaDTO);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Email request sent to Kafka topic: "+ questions.getEmail()));
-        } catch (Exception e) {
-        	// catch this later
-            log.error("Failed to send email request to Kafka topic", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Failed to send email request to Kafka topic"));
-        }
+		// Set up HTTP headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        
+        // Set up the request body
+        HttpEntity<QuestionDTO> requestEntity = new HttpEntity<>(questions, headers);
+        
+        // Send the POST request
+        ResponseEntity<ResponseDTO> responseEntity = restTemplate.exchange(
+            "http://mail-service-svc/inquiries/newInquiry",
+            HttpMethod.POST,
+            requestEntity,
+            ResponseDTO.class
+        );
+		
+		
+		
+//		try {
+//            // Publish a message to Kafka topic containing necessary information
+//			KafkaDTO kafkaDTO = new KafkaDTO();
+//			kafkaDTO.setQuestionDTO(questions);
+//            kafkaProducer.sendMessage(kafkaDTO);
+//            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Email request sent to Kafka topic: "+ questions.getEmail()));
+//        } catch (Exception e) {
+//        	// catch this later
+//            log.error("Failed to send email request to Kafka topic", e);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Failed to send email request to Kafka topic"));
+//        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(responseEntity.getBody());
 	}
 
 
