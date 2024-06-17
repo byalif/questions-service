@@ -79,7 +79,7 @@ public class QuestionServiceImpl implements QuestionService{
         
         // Send the POST request
         ResponseEntity<ResponseDTO> responseEntity = restTemplate.exchange(
-            "http://mail-service-svc/mail/inquiries/newInquiry",
+            "http://mail-service-svc/mail/newInquiry",
             HttpMethod.POST,
             requestEntity,
             ResponseDTO.class
