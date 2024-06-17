@@ -1,6 +1,10 @@
 package com.byalif.questionsservice.DTO;
 
 public class ResponseDTO {
+	
+    public ResponseDTO() {
+    }
+
 	public ResponseDTO(String string) {
 		this.message = string;
 	}

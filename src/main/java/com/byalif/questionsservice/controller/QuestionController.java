@@ -22,7 +22,6 @@ import com.byalif.questionsservice.service.QuestionServiceImpl;
 
 @RestController
 @RequestMapping("/question")
-@CrossOrigin(origins = "http://localhost:3000")
 public class QuestionController {
 
 
