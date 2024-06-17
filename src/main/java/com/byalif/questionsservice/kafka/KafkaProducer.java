@@ -15,21 +15,21 @@ import com.byalif.questionsservice.DTO.KafkaDTO;
 @Component
 public class KafkaProducer {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
-
-	@Autowired
-	NewTopic topic;
-
-	@Autowired
-	private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
-
-
-	public void sendMessage(KafkaDTO kafkaDTO) {
-		LOGGER.info("Order event => %s", kafkaDTO.getQuestionDTO().toString());
-
-		Message<KafkaDTO> message = MessageBuilder.withPayload(kafkaDTO).setHeader(KafkaHeaders.TOPIC, topic.name())
-				.build();
-		
-		kafkaTemplate.send(message);
-	}
+//	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+//
+//	@Autowired
+//	NewTopic topic;
+//
+//	@Autowired
+//	private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
+//
+//
+//	public void sendMessage(KafkaDTO kafkaDTO) {
+//		LOGGER.info("Order event => %s", kafkaDTO.getQuestionDTO().toString());
+//
+//		Message<KafkaDTO> message = MessageBuilder.withPayload(kafkaDTO).setHeader(KafkaHeaders.TOPIC, topic.name())
+//				.build();
+//		
+//		kafkaTemplate.send(message);
+//	}
 }
